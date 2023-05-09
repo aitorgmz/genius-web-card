@@ -9,51 +9,71 @@ from PIL import ImageFont, ImageDraw, Image
 
 white = (255, 255, 255)
 black = (0, 0, 0)
-font = cv2.FONT_HERSHEY_SIMPLEX
-textThickness = 2
-fontScale = 1
-pillowFont = ImageFont.truetype("C:\\Users\\Aitor\\Desktop\\Programme.ttf", 50)
-def createImage(pathToFile, songText, songAutor, songName):
+line_count = 0
+
+def createImage(pathToFile, song_text, song_autor, song_name):
     print("Iniciando creacion imagen")
     img = cv2.imread(pathToFile)
 
-    #conversion to pillow(needed to write with custom font)
-    cv2ImgArray = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    cv2_img_array = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
     width, height, channels = img.shape
     print("Image data: ", height, width, channels)
 
-    lyricPosX = 50
-    lyricPosY = (height-200)
-    lyricPos = (lyricPosX, lyricPosY)
+    pillow_font_programme = ImageFont.truetype("C:\\Users\\Aitor\\Desktop\\Programme.ttf", int(0.048*width))
+    pillow_font_georgia = ImageFont.truetype("C:\\Users\\Aitor\\Desktop\\Georgia.ttf", int(0.1*width))
 
-    cv2ImgArray = writeTextWithBackgroundPillow(cv2ImgArray, songText, white, white, lyricPosX, lyricPosY)
-    cv2ImgArray = writeTextWithoutBackground(cv2ImgArray,  songAutor + " \"" + songName + "\"", lyricPosX, lyricPosY+75)
+    #default values for both left and top margin
+    margin_x = 0.048*width
+    line_height = width*0.065
+    pos_y = (height-(height*0.25))
 
-    cv2.imwrite("C:\\Users\\Aitor\\Desktop\\final.jpg", cv2ImgArray)
+    song_text_array = [song_text[i:i+40] for i in range(0, len(song_text), 40)]
+    for i,line in enumerate(song_text_array):
+        cv2_img_array = write_text_with_background(cv2_img_array, line, "#000", "#FFF", pillow_font_programme,
+                                                 2*margin_x, pos_y + (line_height*line_count))
+    cv2_img_array = write_text_no_background(cv2_img_array,  song_autor + " \"" + song_name + "\"", pillow_font_programme,
+                                             2*margin_x, pos_y+(line_height*line_count))
+    cv2_img_array = write_text_no_background(cv2_img_array, "“", pillow_font_georgia,
+                                             margin_x, pos_y - (width*0.03))
+
+    cv2.imwrite("C:\\Users\\Aitor\\Desktop\\final.jpg", cv2_img_array)
     cv2.waitKey(0)
 
 
-def writeTextWithBackgroundPillow(cv2ImageArray,text, textColor, bgColor, posX, posY):
-    textUbication, textHeight = cv2.getTextSize(text, font, fontScale, textThickness)
-    pillowImage = Image.fromarray(cv2ImageArray)
-    pillowDrawType = ImageDraw.Draw(pillowImage)
-    pillowDrawType.rectangle([(posX, posY),(posX+925, posY+50)], fill="#FFF")
-    pillowDrawType.text((posX, posY), text, font=pillowFont, fill="#000")
-    cv2ImageArray = cv2.cvtColor(np.array(pillowImage), cv2.COLOR_RGB2BGR)
-    return cv2ImageArray
+def write_text_with_background(cv2_image_array,text, text_color, bg_color, font, pos_x, pos_y):
+    global line_count
+    pillow_image = Image.fromarray(cv2_image_array)
+    pillow_draw_type = ImageDraw.Draw(pillow_image)
+    text_pos_x, text_pos_y = get_text_dimensions(text, font)
+    pillow_draw_type.rectangle([(pos_x, pos_y),(pos_x + text_pos_x, pos_y + text_pos_y)],
+                               fill=bg_color)
+    pillow_draw_type.text((pos_x, pos_y), text, font=font, fill=text_color)
+    cv2_image_array = cv2.cvtColor(np.array(pillow_image), cv2.COLOR_RGB2BGR)
+    line_count+=1
+    return cv2_image_array
 
-def writeTextWithoutBackground(cv2ImageArray, text, posX, posY):
-    pillowImage = Image.fromarray(cv2ImageArray)
-    pillowDrawType = ImageDraw.Draw(pillowImage)
-    pillowDrawType.text((posX, posY), text, font=pillowFont, fill="#FFF")
-    cv2ImageArray = cv2.cvtColor(np.array(pillowImage), cv2.COLOR_RGB2BGR)
-    return cv2ImageArray
+def write_text_no_background(cv2_image_array, text, font, pos_x, pos_y):
+    global line_count
+    pillow_image = Image.fromarray(cv2_image_array)
+    pillow_draw_type = ImageDraw.Draw(pillow_image)
+    pillow_draw_type.text((pos_x, pos_y), text, font=font, fill="#FFF")
+    cv2_image_array = cv2.cvtColor(np.array(pillow_image), cv2.COLOR_RGB2BGR)
+    line_count+=1
+    return cv2_image_array
 
+def get_text_dimensions(text_string, font):
+    ascent, descent = font.getmetrics()
+
+    text_width = font.getmask(text_string).getbbox()[2]
+    text_height = font.getmask(text_string).getbbox()[3] + descent
+
+    return (text_width, text_height)
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    createImage("C:\\Users\\Aitor\\Desktop\\surimi.jpg","yo te cojo y te mato y te mando al carajo", "Space Surimi", "Romantic Bogavantic")
+    createImage("C:\\Users\\Aitor\\Desktop\\surimi.jpg","Yo te cojo y te mato y te mando al carajo, te cojo, te mato y te mando",
+                "Space Surimi", "Romantic Bogavantic")
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
