@@ -26,9 +26,14 @@ def createImage(pathToFile, song_text, song_autor, song_name):
     #default values for both left and top margin
     margin_x = 0.048*width
     line_height = width*0.065
-    pos_y = (height-(height*0.25))
 
-    song_text_array = [song_text[i:i+40] for i in range(0, len(song_text), 40)]
+    song_text_length = len(song_text)
+    if song_text_length < 120:
+        pos_y = (height-(height*0.30))
+    else:
+        pos_y = (height-(height*0.45))
+
+    song_text_array = [song_text[i:i+40] for i in range(0, song_text_length, 40)]
     for i,line in enumerate(song_text_array):
         cv2_img_array = write_text_with_background(cv2_img_array, line, "#000", "#FFF", pillow_font_programme,
                                                  2*margin_x, pos_y + (line_height*line_count))
@@ -37,6 +42,8 @@ def createImage(pathToFile, song_text, song_autor, song_name):
     cv2_img_array = write_text_no_background(cv2_img_array, "“", pillow_font_georgia,
                                              margin_x, pos_y - (width*0.03))
 
+    if line_count % 2 == 0:
+        cv2_img_array = cv2.cvtColor(cv2_img_array, cv2.COLOR_RGB2BGR)
     cv2.imwrite("C:\\Users\\Aitor\\Desktop\\final.jpg", cv2_img_array)
     cv2.waitKey(0)
 
@@ -73,7 +80,7 @@ def get_text_dimensions(text_string, font):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    createImage("C:\\Users\\Aitor\\Desktop\\surimi.jpg","Yo te cojo y te mato y te mando al carajo, te cojo, te mato y te mando",
+    createImage("C:\\Users\\Aitor\\Desktop\\surimi.jpg","Yo te cojo y te mato y te mando al carajo",
                 "Space Surimi", "Romantic Bogavantic")
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
