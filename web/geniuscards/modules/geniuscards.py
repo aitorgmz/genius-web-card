@@ -8,9 +8,12 @@ white = (255, 255, 255)
 black = (0, 0, 0)
 line_count = 0
 
-def createImage(pathToFile, song_text, song_autor, song_name):
+def createImage(base_64, song_text, song_autor, song_name):
+    global line_count
     print("Iniciando creacion imagen")
-    img = cv2.imread(pathToFile)
+    encoded_data = base_64.split(',')[1]
+    nparr = np.fromstring(base64.b64decode(encoded_data), np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
     cv2_img_array = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
@@ -43,9 +46,8 @@ def createImage(pathToFile, song_text, song_autor, song_name):
         cv2_img_array = cv2.cvtColor(cv2_img_array, cv2.COLOR_RGB2BGR)
     print(type(cv2_img_array))
     _, buffer = cv2.imencode('.jpg', cv2_img_array)
+    line_count = 0
     return base64.b64encode(buffer).decode('ascii')
-    #cv2.imwrite("C:\\Users\\Aitor\\Desktop\\final.jpg", cv2_img_array)
-    #cv2.waitKey(0)
 
 
 def write_text_with_background(cv2_image_array,text, text_color, bg_color, font, pos_x, pos_y):

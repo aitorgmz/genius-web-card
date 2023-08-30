@@ -1,15 +1,32 @@
-from django.http import HttpResponse
+import logging
+
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from .modules.geniuscards import createImage
+from .forms import MainForm
+
 
 def index(request):
+
     template = loader.get_template("geniuscards/index.html")
-    encoded_image = createImage("C:\\Users\\Aitor\\Desktop\\surimi.jpg","Yo te cojo y te mato y te mando al carajo FAIL",
-                "Space Surimi", "Romantic Bogavantic")
-    context = {
-        'encoded_image': encoded_image
-    }
-    text_file = open("C:\\Users\\Aitor\\Desktop\\encoding.txt", "w")
-    n = text_file.write(encoded_image)
-    text_file.close()
-    return HttpResponse(template.render(context))
+
+    if request.method == "POST":
+        form = MainForm(request.POST)
+        if form.is_valid():
+            song_title = form.cleaned_data["song_title"]
+            song_author = form.cleaned_data["song_author"]
+            song_lyrics = form.cleaned_data["song_lyrics"]
+            song_image_name = form.cleaned_data["song_image"]
+            song_image_base64 = form.cleaned_data["song_image_base64"]
+            print("Value: ", song_image_base64)
+            encoded_image = createImage(song_image_base64, song_lyrics,
+                song_author, song_title)
+            encoded_image = "data:image/png;base64,"+encoded_image
+            context = {
+                'encoded_image': encoded_image,
+                'form': form
+            }
+    else:
+        form = MainForm()
+        context = {'form': form}
+    return HttpResponse(template.render(context, request))
