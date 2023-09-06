@@ -1,7 +1,7 @@
 $(document).ready(function(){
-    //if($("#mainImage").is(":visible")) ?  $("#mainImage").css("visibility","hidden") : $("#mainImage").css("visibility","visible") ;
-    const input = document.getElementById("id_song_image");
-    console.log(input);
+    initialize();
+    initializeMainButtons();
+    const imageInput = document.getElementById("id_song_image");
 
     const convertBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -21,11 +21,29 @@ $(document).ready(function(){
     const uploadImage = async (event) => {
         const file = event.target.files[0];
         const base64 = await convertBase64(file);
-        console.log(base64);
         document.getElementById("id_song_image_base64").value = base64;
     };
 
-    input.addEventListener("change", (e) => {
+    imageInput.addEventListener("change", (e) => {
         uploadImage(e);
     });
 });
+
+function initialize(){
+    $("#spotifyCreation").css("display","none");
+}
+
+function initializeMainButtons(){
+    $("#selectMode").click( function(){
+        if ($("#spotifyCreation").css("display") == "none"){
+            $("#spotifyCreation").css("display","flex");
+            $("#localCreation").css("display","none");
+            $("#selectMode").prop("value","Create manually");
+        } else {
+            $("#spotifyCreation").css("display", "none");
+            $("#localCreation").css("display","flex");
+            $("#selectMode").prop("value","Create using Spotify");
+        }
+    });
+
+}

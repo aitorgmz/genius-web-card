@@ -10,7 +10,6 @@ line_count = 0
 
 def createImage(base_64, song_text, song_autor, song_name):
     global line_count
-    print("Iniciando creacion imagen")
     encoded_data = base_64.split(',')[1]
     nparr = np.fromstring(base64.b64decode(encoded_data), np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
@@ -18,7 +17,6 @@ def createImage(base_64, song_text, song_autor, song_name):
     cv2_img_array = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
     width, height, channels = img.shape
-    print("Image data: ", height, width, channels)
 
     pillow_font_programme = ImageFont.truetype("C:\\Users\\Aitor\\Desktop\\Programme.ttf", int(0.048*width))
     pillow_font_georgia = ImageFont.truetype("C:\\Users\\Aitor\\Desktop\\Georgia.ttf", int(0.1*width))
@@ -44,7 +42,6 @@ def createImage(base_64, song_text, song_autor, song_name):
 
     if line_count % 2 == 0:
         cv2_img_array = cv2.cvtColor(cv2_img_array, cv2.COLOR_RGB2BGR)
-    print(type(cv2_img_array))
     _, buffer = cv2.imencode('.jpg', cv2_img_array)
     line_count = 0
     return base64.b64encode(buffer).decode('ascii')

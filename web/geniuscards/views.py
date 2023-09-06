@@ -18,7 +18,6 @@ def index(request):
             song_lyrics = form.cleaned_data["song_lyrics"]
             song_image_name = form.cleaned_data["song_image"]
             song_image_base64 = form.cleaned_data["song_image_base64"]
-            print("Value: ", song_image_base64)
             encoded_image = createImage(song_image_base64, song_lyrics,
                 song_author, song_title)
             encoded_image = "data:image/png;base64,"+encoded_image
