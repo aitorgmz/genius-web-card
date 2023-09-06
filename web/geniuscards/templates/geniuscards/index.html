@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Genius-style card generator</title>
+    {% load static %}
+    <script src="{% static 'geniuscards/js/jquery-3.7.0.min.js' %}"></script>
+    <script src="{% static 'geniuscards/js/mainjs.js' %}"></script>
+    <link rel="stylesheet" src="{% static 'geniuscards/css/styles.js' %}">
+</head>
+<header>
+    <h1>genius image generator</h1>
+</header>
+<body>
+    <form id="mainForm" action="/geniuscards/" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Create Image">
+    </form>
+    <img src="{{encoded_image}}" id="mainImage" width="700px" height="700px">
+</body>
+
+<body>
+
+</body>
+</html>
