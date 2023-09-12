@@ -1,3 +1,96 @@
-mainForm[src="data:image/png;base64,"]{
-    display: none;
+html, body{
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  height: 100%;
 }
+
+body{
+    min-height: 100%;
+    font-family: 'Roboto', serif;
+}
+
+header{
+    background-color: rgb(255, 255, 100);
+    padding-top: 0.75%;
+    padding-bottom: 0.75%;
+    font-family: 'Open Sans', serif;
+    border-bottom: 4px solid black;
+}
+
+header h1{
+    margin-left: 2%;
+}
+
+#selectorDiv{
+    padding-top: 0.75%;
+}
+
+#selectMode{
+    margin-left: 10%;
+    height: 50px;
+    width: 25%;
+}
+
+#localCreation{
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    margin-top: 2%;
+}
+
+#localCreation form{
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+#mainForm input[type="text"]{
+    border-bottom: 2px solid black;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: 'Roboto', serif;
+    font-size: 14px;
+    width: 100%;
+}
+
+#mainForm textarea{
+    margin-top: 2.5%;
+    border: 2px solid black;
+    font-family: 'Roboto', serif;
+    font-size: 14px;
+    resize: none;
+}
+
+#mainForm input[type="submit"] {
+    width: 75%;
+    height: 50px;
+    font-family: 'Roboto', serif;
+}
+
+#mainForm input::file-selector-button {
+    font-family: 'Roboto', serif;
+    border: 2px solid black;
+    background-color: white;
+    width: 50%;
+    height: 100%;
+    color: black;
+}
+
+.submitButton{
+    font-family: 'Roboto', serif;
+    border-bottom: 2px solid black;
+    background-color: black;
+    color: white;
+}
+
+.formField{
+    display: flex;
+    justify-content: align-left;
+    margin-top: 9%;
+}
+
+.formField label{
+    margin-right: 2.5%;
+}
+

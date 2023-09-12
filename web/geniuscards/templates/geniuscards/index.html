@@ -6,18 +6,37 @@
     {% load static %}
     <script src="{% static 'geniuscards/js/jquery-3.7.0.min.js' %}"></script>
     <script src="{% static 'geniuscards/js/mainjs.js' %}"></script>
-    <link rel="stylesheet" src="{% static 'geniuscards/css/styles.js' %}">
+    <link rel="stylesheet" href="{% static 'geniuscards/css/styles.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
 </head>
 <header>
-    <h1>genius image generator</h1>
+    <h1>Genius-style card generator</h1>
 </header>
 <body>
+    <div id="selectorDiv">
+        <input type="button"class="submitButton" id="selectMode" value="CREATE USING SPOTIFY">
+    </div>
+    <div id="localCreation">
     <form id="mainForm" action="/geniuscards/" method="post">
         {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Create Image">
+        {% for field in form.visible_fields %}
+          <div class="formField">
+            {{ field.label_tag }} {{ field }}
+          </div>
+        {% endfor %}
+        {% for hidden_field in form.hidden_fields %}
+            {{ hidden_field }}
+        {% endfor %}
+        <div class="formField">
+            <input type="submit" class="submitButton" value="CREATE IMAGE">
+        </div>
     </form>
     <img src="{{encoded_image}}" id="mainImage" width="700px" height="700px">
+    </div>
+    <div id="spotifyCreation">
+        <p>To be implemented...</p>
+    </div>
 </body>
 
 <body>
