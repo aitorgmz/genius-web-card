@@ -18,25 +18,30 @@
         <input type="button"class="submitButton" id="selectMode" value="CREATE USING SPOTIFY">
     </div>
     <div id="localCreation">
-    <form id="mainForm" action="/geniuscards/" method="post">
-        {% csrf_token %}
-        {% for field in form.visible_fields %}
-          <div class="formField">
-            {{ field.label_tag }} {{ field }}
-          </div>
-        {% endfor %}
-        {% for hidden_field in form.hidden_fields %}
-            {{ hidden_field }}
-        {% endfor %}
-        <div class="formField">
-            <input type="submit" class="submitButton" value="CREATE IMAGE">
-        </div>
-    </form>
+        <form id="mainForm" action="/geniuscards/" method="post">
+            {% csrf_token %}
+            {% for field in form.visible_fields %}
+              <div class="formField">
+                {{ field.label_tag }} {{ field }}
+              </div>
+            {% endfor %}
+            {% for hidden_field in form.hidden_fields %}
+                {{ hidden_field }}
+            {% endfor %}
+            <div class="formField">
+                <input type="submit" class="submitButton" value="CREATE IMAGE">
+            </div>
+        </form>
     <img src="{{encoded_image}}" id="mainImage" width="700px" height="700px">
     </div>
     <div id="spotifyCreation">
-        <p>To be implemented...</p>
+        Author: <input type="text" id="id_genius_song_author">
+        Song: <input type="text" id="id_genius_song_song">
+        <textarea id="geniusLyricsTextarea"></textarea>
+        <input type="button" class="submitButton" id="searchGenius" value="CREATE USING SPOTIFY">
+        <img src="{{encoded_image}}" id="geniusImage" width="700px" height="700px">
     </div>
+
 </body>
 
 <body>

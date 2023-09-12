@@ -27,6 +27,10 @@ $(document).ready(function(){
     imageInput.addEventListener("change", (e) => {
         uploadImage(e);
     });
+
+    $("#searchGenius").click(function(){
+        refreshData();
+    });
 });
 
 function initialize(){
@@ -45,5 +49,23 @@ function initializeMainButtons(){
             $("#selectMode").prop("value","Create using Spotify");
         }
     });
+}
 
+function refreshData(){
+        let author = $("#id_genius_song_author").val();
+        let song = $("#id_genius_song_song").val();
+        $.ajax({
+            url : 'http://127.0.0.1:8000/geniuscards/getSongData',
+            type : 'POST',
+            dataType:'json',
+            data: {"author":author,"song":song},
+            success : function(data) {
+                console.log(JSON.stringify(data))
+                $("#geniusLyricsTextarea").val(JSON.stringify(data));
+            },
+            error : function(request,error)
+            {
+                alert("Error recuperando resultados");
+            }
+        });
 }
