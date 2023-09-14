@@ -47,3 +47,14 @@ def get_song_data(request):
     artist = genius.search_artist(author, max_songs=0)
     songs = genius.search_song(song, artist.name)
     return JsonResponse({"songName": songs.title, "songAuthor": songs.artist, "song": str(songs.lyrics), "coverUrl": songs.song_art_image_url})
+
+
+@csrf_exempt
+def get_image_from_song_data(request):
+    song = request.POST.dict().get("song")
+    author = request.POST.dict().get("author")
+    lyrics = request.POST.dict().get("lyrics")
+    image_base64 = request.POST.dict().get("image")
+    encoded_image = createImage(image_base64, lyrics,
+                            author, song)
+    return JsonResponse({"encodedImage":encoded_image})

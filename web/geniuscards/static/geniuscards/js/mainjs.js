@@ -78,7 +78,7 @@ function refreshData(){
                 $("#geniusImage").css("visibility","visible");
                 $("#foundSongPanel").css("display","flex");
                 $("#generateImage").css("display","flex");
-                $("#searchGenius").text("SEARCH AGAIN");
+                $("#searchGenius").attr("value","SEARCH AGAIN");
             },
             error : function(request,error)
             {
