@@ -35,6 +35,11 @@ $(document).ready(function(){
 
 function initialize(){
     $("#spotifyCreation").css("display","none");
+    $("#foundSongPanel").css("display","none");
+    $("#generateImage").css("display","none");
+    $("#searchGenius").text("SEARCH LYRICS");
+    $("#geniusLyricsTextarea").css("visibility", "hidden");
+    $("#geniusImage").css("visibility","hidden");
 }
 
 function initializeMainButtons(){
@@ -60,8 +65,20 @@ function refreshData(){
             dataType:'json',
             data: {"author":author,"song":song},
             success : function(data) {
-                console.log(JSON.stringify(data))
-                $("#geniusLyricsTextarea").val(JSON.stringify(data));
+                let geniusSong = Object.entries(data)[0][1];
+                let geniusArtist = Object.entries(data)[1][1];
+                let geniusLyrics = String(Object.entries(data)[2][1]);
+                let geniusCoverUrl = Object.entries(data)[3][1];
+                geniusLyrics  = geniusLyrics.substring(geniusLyrics.indexOf("Lyrics")+6);
+                $("#geniusLyricsTextarea").val(geniusLyrics);
+                $("#foundSongName").text(geniusSong+" ");
+                $("#foundSongArtist").text(" by "+geniusArtist);
+                $("#foundSongCover").attr("src",geniusCoverUrl);
+                $("#geniusLyricsTextarea").css("visibility", "visible");
+                $("#geniusImage").css("visibility","visible");
+                $("#foundSongPanel").css("display","flex");
+                $("#generateImage").css("display","flex");
+                $("#searchGenius").text("SEARCH AGAIN");
             },
             error : function(request,error)
             {

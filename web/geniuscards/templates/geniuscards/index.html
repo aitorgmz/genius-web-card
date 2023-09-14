@@ -35,10 +35,29 @@
     <img src="{{encoded_image}}" id="mainImage" width="700px" height="700px">
     </div>
     <div id="spotifyCreation">
-        Author: <input type="text" id="id_genius_song_author">
-        Song: <input type="text" id="id_genius_song_song">
+            <div class="column" id="spotifyCreationMainColumn">
+                <div class="formField">
+                    <label for="id_genius_song_author">Author</label>
+                    <input type="text" id="id_genius_song_author" maxlength="100">
+                </div>
+                <div class="formField">
+                    <label for="id_genius_song_song">Song</label>
+                    <input type="text" id="id_genius_song_song" maxlength="100">
+                </div>
+                <div class ="formField" id="foundSongPanel">
+                    <img id="foundSongCover" src="" height="200px" width="200px">
+                    <div class="column">
+                        <p id="foundSongName"></p>
+                        <p id="foundSongArtist"></p>
+                    </div>
+                </div>
+                <div class="formField">
+                    <input type="button" class="submitButton" id="searchGenius" value="SEARCH LYRICS">
+                    <input type="button" class="submitButton" id="generateImage" value="GENERATE IMAGE">
+                </div>
+            </div>
         <textarea id="geniusLyricsTextarea"></textarea>
-        <input type="button" class="submitButton" id="searchGenius" value="CREATE USING SPOTIFY">
+
         <img src="{{encoded_image}}" id="geniusImage" width="700px" height="700px">
     </div>
 

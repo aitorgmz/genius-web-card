@@ -8,7 +8,8 @@ from .modules.geniuscards import createImage
 from .forms import MainForm
 
 global genius
-genius = lyricsgenius.Genius("")
+access_token = "WmLJlpJZxhnTlXaTIdCmjF2p1Q-jy0_L6SWKae5X-8wyUIAEmVviIu0Z0T7K9LcV"
+genius = lyricsgenius.Genius(access_token)
 
 
 def index(request):
@@ -45,5 +46,4 @@ def get_song_data(request):
     song = request.POST.dict().get("song")
     artist = genius.search_artist(author, max_songs=0)
     songs = genius.search_song(song, artist.name)
-    print(songs)
-    return JsonResponse({"song": songs.lyrics})
+    return JsonResponse({"songName": songs.title, "songAuthor": songs.artist, "song": str(songs.lyrics), "coverUrl": songs.song_art_image_url})
