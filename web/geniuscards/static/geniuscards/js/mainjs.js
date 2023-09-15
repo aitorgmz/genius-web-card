@@ -31,6 +31,11 @@ $(document).ready(function(){
     $("#searchGenius").click(function(){
         refreshData();
     });
+
+    $("#generateImage").click(function(){
+        getImageFromSongData();
+    });
+
 });
 
 function initialize(){
@@ -85,4 +90,50 @@ function refreshData(){
                 alert("Error recuperando resultados");
             }
         });
+}
+
+
+function getImageFromSongData(){
+        let song = $("#foundSongName").text();
+        let author = $("#foundSongArtist").text();
+        author = author.replace(" by","");
+        let lyricsStart = $("#geniusLyricsTextarea")[0].selectionStart;
+        let lyricsEnd = $("#geniusLyricsTextarea")[0].selectionEnd;
+        let lyrics = $("#geniusLyricsTextarea").val().substring(lyricsStart, lyricsEnd);
+        let image = "";
+        convertToBase64($('#foundSongCover').prop('src'), function(base64Image) {
+            base64Image = base64Image.replace("data:image/","");
+            base64Image = base64Image.replace("png;","");
+            base64Image = base64Image.replace("jpeg;","");
+            base64Image = base64Image.replace("base64,","");
+            console.log(base64Image);
+            $.ajax({
+                url : 'http://127.0.0.1:8000/geniuscards/getImageFromSongData',
+                type : 'POST',
+                dataType:'json',
+                data: {"song":song,"author":author,"lyrics":lyrics,"image":base64Image},
+                success : function(data) {
+
+                    $("#geniusImage").attr("src","data:image/png;base64,"+Object.entries(data)[0][1]);
+                },
+                error : function(request,error)
+                {
+                    alert("Error recuperando resultados");
+                }
+            });
+        });
+}
+
+function convertToBase64(url, callback) {
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function() {
+    var reader = new FileReader();
+    reader.onloadend = function() {
+      callback(reader.result);
+    };
+    reader.readAsDataURL(xhr.response);
+  };
+  xhr.open('GET', url);
+  xhr.responseType = 'blob';
+  xhr.send();
 }
