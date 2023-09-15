@@ -7,3 +7,6 @@ class MainForm(forms.Form):
     song_lyrics = forms.CharField(label="Lyrics", max_length=500, widget=forms.Textarea)
     song_image = forms.ImageField(label="Image", required=False)
     song_image_base64 = forms.CharField(widget=forms.HiddenInput(), initial=" ", required=False)
+
+
+

@@ -37,6 +37,7 @@ header h1{
     justify-content: flex-start;
     align-content: flex-start;
     margin-top: 2%;
+    transition: margin-right 1s ease-in-out .5s;
 }
 
 #localCreation form{
@@ -44,7 +45,7 @@ header h1{
     margin-right: 10%;
 }
 
-#mainForm input[type="text"]{
+input[type="text"]{
     border-bottom: 2px solid black;
     border-top: none;
     border-left: none;
@@ -77,6 +78,27 @@ header h1{
     color: black;
 }
 
+#spotifyCreation{
+    display: flex;
+    margin-top: 2%;
+    margin-left: 7.5%;
+}
+
+#geniusLyricsTextarea{
+    margin-right: 2.5%;
+    width: 20%;
+}
+
+#searchGenius{
+    width: 75%;
+    height: 50px;
+    font-family: 'Roboto', serif;
+}
+
+#spotifyCreationMainColumn{
+    width: 20%
+}
+
 .submitButton{
     font-family: 'Roboto', serif;
     border-bottom: 2px solid black;
@@ -92,5 +114,11 @@ header h1{
 
 .formField label{
     margin-right: 2.5%;
+}
+
+.column{
+    display: flex;
+    flex-direction: column;
+    padding: 2.5%;
 }
 

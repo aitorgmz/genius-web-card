@@ -8,9 +8,11 @@ white = (255, 255, 255)
 black = (0, 0, 0)
 line_count = 0
 
-def createImage(base_64, song_text, song_autor, song_name):
+def createImage(base_64, song_text, song_autor, song_name, is_local_file):
     global line_count
-    encoded_data = base_64.split(',')[1]
+    encoded_data = str(base_64)
+    if is_local_file == True:
+        encoded_data = base_64.split(',')[1]
     nparr = np.fromstring(base64.b64decode(encoded_data), np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
