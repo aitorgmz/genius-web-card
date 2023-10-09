@@ -62,25 +62,31 @@ function initialize(){
 }
 
 function initializeMainButtons(){
-    $("#selectMode").click( function(){
-        if ($("#spotifyCreation").css("display") == "none"){
-            $("#selectMode").prop("value","Create manually");
-            $("#spotifyCreation").toggle(500);
-            $("#localCreation").toggle(500);
-        } else {
-            $("#selectMode").prop("value","Create using Spotify");
-            $("#spotifyCreation").toggle(500);
-            $("#localCreation").toggle(500);
-        }
-    });
+          $("#selectorDivSpotify").click(function(){
+          if($("#spotifyCreation").css("display") == "none"){
+                $("#spotifyCreation").animate({width: 'toggle'});
+                $("#localCreation").animate({width: 'toggle'});
+                $("#selectorDivSpotify").animate({backgroundColor: 'black', color: 'white'})
+                $("#selectorDivManual").animate({backgroundColor: 'white', color: 'black'})
+            }
+          });
+          $("#selectorDivManual").click(function(){
+            if($("#localCreation").css("display") == "none"){
+                $("#spotifyCreation").animate({width: 'toggle'});
+                $("#localCreation").animate({width: 'toggle'});
+                $("#selectorDivManual").animate({backgroundColor: 'black', color: 'white'})
+                $("#selectorDivSpotify").animate({backgroundColor: 'white', color: 'black'})
+            }
+          });
 }
 
 function refreshData(){
         let author = $("#id_genius_song_author").val();
         let song = $("#id_genius_song_song").val();
-        console.log(author);
         if(song.trim().length != 0 && author.trim().length != 0){
-            $("#geniusErrorDiv").toggle(250);
+            if($("#geniusErrorDiv").is(":visible")){
+                $("#geniusErrorDiv").toggle(250);
+            }
             $.ajax({
                 url : 'http://127.0.0.1:8000/geniuscards/getSongData',
                 type : 'POST',
@@ -109,6 +115,7 @@ function refreshData(){
                 error : function(request,error)
                 {
                     alert("Error recuperando resultados");
+                    $("#foundSongPanel").css("display","none");
                 }
             });
         } else {

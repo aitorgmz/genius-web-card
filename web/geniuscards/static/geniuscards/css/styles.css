@@ -13,7 +13,6 @@ body{
 header{
     background-color: rgb(255, 255, 100);
     padding-top: 0.75%;
-    padding-bottom: 0.75%;
     font-family: 'Open Sans', serif;
     border-bottom: 4px solid black;
 }
@@ -23,9 +22,8 @@ header h1{
 }
 
 #selectorDiv{
-    padding-top: 0.75%;
     display: flex;
-    align-items: center;
+    justify-content: space-evenly;
 }
 
 #selectMode{
@@ -122,9 +120,20 @@ input[type="text"]{
 }
 
 #tooltip p {
-    padding-left: 10px;
+    padding-left: 7.25px;
     padding-right: 10px;
     color: white;
+}
+
+#selectorDivSpotify{
+    background-color: black;
+    color: white;
+}
+
+#infoButtonDiv{
+    position: fixed;
+    right: 7%;
+    top: 22%;
 }
 
 .formField{
@@ -147,5 +156,20 @@ input[type="text"]{
     margin-top: 7.5% !important;
     background-color: rgb(255, 128, 128);
     border: 2px solid rgb(204, 0, 0);
+}
+
+.formErrorDiv p{
+    display: flex;
+    justify-content: space-around;
+}
+
+.selectorDivChild{
+    width: 100%;
+    padding: 0.25%;
+}
+
+.selectorDivChild p{
+    display: flex;
+    justify-content: center;
 }
 
