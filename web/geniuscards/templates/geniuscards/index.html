@@ -34,8 +34,11 @@
             {% for hidden_field in form.hidden_fields %}
                 {{ hidden_field }}
             {% endfor %}
+            <div class="formErrorDiv" id="manualErrorDiv">
+                 <p class="formErrorMessage" id="manualErrorMessage">There was an error processing your image.</p>
+            </div>
             <div class="formField">
-                <input type="submit" class="submitButton" value="CREATE IMAGE">
+                <input type="button" class="submitButton" id="submitButtonManually" value="CREATE IMAGE">
             </div>
         </form>
     <img src="{{encoded_image}}" id="mainImage" width="700px" height="700px">
@@ -43,11 +46,11 @@
     <div id="spotifyCreation">
             <div class="column" id="spotifyCreationMainColumn">
                 <div class="formField">
-                    <label for="id_genius_song_song">Song Title: </label>
+                    <label for="id_genius_song_song"><b>Song Title:</b></label>
                     <input type="text" id="id_genius_song_song" maxlength="100">
                 </div>
                 <div class="formField">
-                    <label for="id_genius_song_author">Author: </label>
+                    <label for="id_genius_song_author"> <b>Author:</b> </label>
                     <input type="text" id="id_genius_song_author" maxlength="100">
                 </div>
                 <div class ="formField" id="foundSongPanel">
@@ -60,7 +63,7 @@
                 <div class="formErrorDiv" id="geniusErrorDiv">
                     <p class="formErrorMessage" id="geniusErrorMessage">You must complete both fields.</p>
                 </div>
-                <div class="formField">
+                <div class="formField" id="geniusSubmitButtonsDiv">
                     <input type="button" class="submitButton" id="searchGenius" value="SEARCH LYRICS">
                     <input type="button" class="submitButton" id="generateImage" value="GENERATE IMAGE">
                 </div>
