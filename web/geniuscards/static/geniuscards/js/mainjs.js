@@ -114,13 +114,17 @@ function refreshData(){
                 },
                 error : function(request,error)
                 {
-                    alert("Error recuperando resultados");
                     $("#foundSongPanel").css("display","none");
+                    $("#geniusErrorMessage").text("We can´t find your song. Try again.");
+                    $("#geniusErrorDiv").toggle(250);
                 }
             });
         } else {
             if(!$("#geniusErrorDiv").is(":visible")){
-                $("#geniusErrorDiv").toggle(250);
+              $("#geniusErrorDiv").toggle(250);
+            }
+            else if ($("#geniusErrorDiv").is(":visible") && $("#geniusErrorMessage").text() == "We can´t find your song. Try again."){
+                $("#geniusErrorMessage").text("You must complete both fields.");
             }
         }
 }

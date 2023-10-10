@@ -8,7 +8,7 @@ from .modules.geniuscards import createImage
 from .forms import MainForm
 
 global genius
-access_token = "WmLJlpJZxhnTlXaTIdCmjF2p1Q-jy0_L6SWKae5X-8wyUIAEmVviIu0Z0T7K9LcV"
+access_token = ""
 genius = lyricsgenius.Genius(access_token)
 
 
