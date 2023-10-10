@@ -170,7 +170,8 @@ function refreshData(){
 function getImageFromSongData(){
         let song = $("#foundSongName").text();
         let author = $("#foundSongArtist").text();
-        author = author.replace(" by","");
+        author = author.replace(" by","").trim();
+        song = song.trim();
         let lyricsStart = $("#geniusLyricsTextarea")[0].selectionStart;
         let lyricsEnd = $("#geniusLyricsTextarea")[0].selectionEnd;
         let lyrics = $("#geniusLyricsTextarea").val().substring(lyricsStart, lyricsEnd);
