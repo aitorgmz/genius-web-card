@@ -31,6 +31,11 @@ $(document).ready(function(){
         uploadImage(e);
     });
 
+    $("#submitButtonManually").click(function(e){
+        e.preventDefault();
+        getImageFromLocalData();
+    });
+
     $("#searchGenius").click(function(e){
         e.preventDefault();
         refreshData();
@@ -54,6 +59,7 @@ function initialize(){
     $("#infoButton").attr("src", infoIcon);
     $("#tooltip").css("display", "none");
     $("#geniusErrorDiv").css("display","none");
+    $("#manualErrorDiv").css("display","none");
     $("#infoButton").hover(function(){
         $("#tooltip").css("display", "flex");
     }, function(){
@@ -64,8 +70,8 @@ function initialize(){
 function initializeMainButtons(){
           $("#selectorDivSpotify").click(function(){
           if($("#spotifyCreation").css("display") == "none"){
-                $("#spotifyCreation").animate({width: 'toggle'});
                 $("#localCreation").animate({width: 'toggle'});
+                $("#spotifyCreation").animate({width: 'toggle'});
                 $("#selectorDivSpotify").animate({backgroundColor: 'black', color: 'white'})
                 $("#selectorDivManual").animate({backgroundColor: 'white', color: 'black'})
             }
@@ -79,6 +85,37 @@ function initializeMainButtons(){
             }
           });
 }
+
+function getImageFromLocalData(){
+    let song_title = $("#id_song_title").val();
+    let song_author = $("#id_song_author").val();
+    let song_lyrics = $("#id_song_lyrics").val();
+    let song_image_base64 = $("#id_song_image_base64").val();
+    if(song_title.trim() != "" && song_author.trim() != "" && song_lyrics != "" && song_image_base64 != ""){
+        if($("#manualErrorDiv").is(":visible")){
+           $("#manualErrorDiv").toggle(250);
+        }
+        $.ajax({
+            url : 'http://127.0.0.1:8000/geniuscards/getImageFromLocalData',
+            type : 'POST',
+            dataType:'json',
+            data: {"song_title":song_title,"song_author":song_author, "song_lyrics":song_lyrics, "song_image_base64":song_image_base64},
+            success : function(data) {
+                $("#mainImage").prop("src",Object.entries(data)[0][1]);
+            },
+            error : function(request,error) {
+                $("#manualErrorMessage").text("There was an error processing your image.");
+                $("#manualErrorDiv").toggle(250);
+            }
+        });
+    } else {
+        $("#manualErrorMessage").text("You need to complete all the fields to create an image.");
+        if(!$("#manualErrorDiv").is(":visible")){
+            $("#manualErrorDiv").toggle(250);
+        }
+    }
+}
+
 
 function refreshData(){
         let author = $("#id_genius_song_author").val();

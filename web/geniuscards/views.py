@@ -13,30 +13,9 @@ genius = lyricsgenius.Genius(access_token)
 
 
 def index(request):
-
     template = loader.get_template("geniuscards/index.html")
-
-    form = MainForm(request.POST)
-    if request.method == "POST":
-        encoded_image = ""
-        if form.is_valid():
-            song_title = form.cleaned_data["song_title"]
-            song_author = form.cleaned_data["song_author"]
-            song_lyrics = form.cleaned_data["song_lyrics"]
-            song_image_name = form.cleaned_data["song_image"]
-            song_image_base64 = form.cleaned_data["song_image_base64"]
-            encoded_image = createImage(song_image_base64, song_lyrics,
-                song_author, song_title, True)
-            encoded_image = "data:image/png;base64,"+encoded_image
-        else:
-            form = MainForm()
-        context = {
-            'encoded_image': encoded_image,
-            'form': form
-        }
-    else:
-        form = MainForm()
-        context = {'form': form}
+    form = MainForm()
+    context = {'form': form}
     return HttpResponse(template.render(context, request))
 
 
@@ -58,3 +37,14 @@ def get_image_from_song_data(request):
     encoded_image = createImage(image_base64, lyrics,
                             author, song, False)
     return JsonResponse({"encodedImage": encoded_image})
+
+@csrf_exempt
+def get_image_from_local_data(request):
+    song_title = request.POST.dict().get("song_title")
+    song_author = request.POST.dict().get("song_author")
+    song_lyrics = request.POST.dict().get("song_lyrics")
+    song_image_base64 = request.POST.dict().get("song_image_base64")
+    encoded_image = createImage(song_image_base64, song_lyrics,
+                                song_author, song_title, True)
+    encoded_image = "data:image/png;base64," + encoded_image
+    return JsonResponse({encoded_image:encoded_image})
