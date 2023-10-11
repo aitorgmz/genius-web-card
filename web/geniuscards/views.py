@@ -1,14 +1,15 @@
 import lyricsgenius
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.template import loader
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from decouple import config
 from .modules.geniuscards import createImage
 from .forms import MainForm
 
 global genius
-access_token = ""
+access_token = config('GENIUS_ACCESS_TOKEN')
 genius = lyricsgenius.Genius(access_token)
 
 

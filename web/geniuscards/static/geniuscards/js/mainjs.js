@@ -99,6 +99,11 @@ function getImageFromLocalData(){
             url : 'http://127.0.0.1:8000/geniuscards/getImageFromLocalData',
             type : 'POST',
             dataType:'json',
+            beforeSend: function(xhr, settings) {
+              if (!this.crossDomain) {
+                   xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              }
+             },
             data: {"song_title":song_title,"song_author":song_author, "song_lyrics":song_lyrics, "song_image_base64":song_image_base64},
             success : function(data) {
                 $("#mainImage").prop("src",Object.entries(data)[0][1]);
@@ -132,6 +137,9 @@ function refreshData(){
                 beforeSend: function(){
                     $("#foundSongCover").attr("src",loadingGif);
                     $("#foundSongPanel").css("display","flex");
+                    if (!this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
                 },
                 success : function(data) {
                     let geniusSong = Object.entries(data)[0][1];
@@ -186,6 +194,11 @@ function getImageFromSongData(){
                 url : 'http://127.0.0.1:8000/geniuscards/getImageFromSongData',
                 type : 'POST',
                 dataType:'json',
+                beforeSend: function(xhr, settings) {
+                    if (!this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                },
                 data: {"song":song,"author":author,"lyrics":lyrics,"image":base64Image},
                 success : function(data) {
 
@@ -211,4 +224,20 @@ function convertToBase64(url, callback) {
   xhr.open('GET', url);
   xhr.responseType = 'blob';
   xhr.send();
+}
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }
