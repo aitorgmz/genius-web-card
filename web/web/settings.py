@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'geniuscards.apps.GeniuscardsConfig',
+    'mainpage.apps.MainpageConfig',
     'django.contrib.staticfiles',
 ]
 

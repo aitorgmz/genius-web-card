@@ -18,5 +18,6 @@ Including another URLconf
 from django.urls import path, include
 
 urlpatterns = [
-    path("geniuscards/", include("geniuscards.urls"))
+    path("geniuscards/", include("geniuscards.urls")),
+    path("", include("mainpage.urls"))
 ]

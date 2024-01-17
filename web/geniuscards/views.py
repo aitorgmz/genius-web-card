@@ -39,6 +39,7 @@ def get_image_from_song_data(request):
                             author, song, False)
     return JsonResponse({"encodedImage": encoded_image})
 
+
 @csrf_exempt
 def get_image_from_local_data(request):
     song_title = request.POST.dict().get("song_title")
