@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% load i18n %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,8 +9,7 @@
 </head>
 <body>
 <div id="sideNav">
-    <a href="#"><span lang="es">Sobre mí</span> <span lang="en">About me</span></a>
+    <a href="#"><p>{% trans "AboutMe" %}</p></a>
 </div>
-<button id="languageBtn"><span lang="es">Idioma</span><span>Language</span></button>
 </body>
 </html>
