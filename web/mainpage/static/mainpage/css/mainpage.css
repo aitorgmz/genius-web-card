@@ -1,0 +1,65 @@
+html, body{
+  margin-top: 2.55%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 2.5%;
+  padding: 0px;
+  border: 0px;
+  height: 100%;
+}
+
+body{
+  display: flex;
+  flex-direction: row;
+  font-family: 'Open Sans', serif;
+}
+
+#sideNav{
+    display: flex;
+    background-color: #05216D;
+    flex-direction: column;
+    padding: 5%;
+    height: 50%;
+}
+
+#sideNav a {
+    display: flex;
+    color: white;
+    text-decoration: none;
+}
+
+#mainContent{
+    display: flex;
+    width: 100%;
+}
+
+#mainContent div{
+    padding-top: 5%;
+}
+
+#aboutMeTab{
+    display: flex;
+}
+
+#projectsTab{
+    display: none;
+}
+
+#contactTab{
+    display: none;
+    width: 100%;
+    flex-direction: column;
+}
+
+#contactTab i{
+    font-size: 40px;
+    color: #05636E;
+}
+
+.contactInfo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 40%;
+}

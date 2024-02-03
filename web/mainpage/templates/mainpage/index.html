@@ -6,10 +6,34 @@
     {% load static %}
     <script src="{% static 'geniuscards/js/jquery-3.7.0.min.js' %}"></script>
     <script src="{% static 'mainpage/js/mainpage.js' %}"></script>
+    <script src="https://kit.fontawesome.com/148ed7288c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'mainpage/css/mainpage.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
 </head>
 <body>
 <div id="sideNav">
-    <a href="#"><p>{% trans "AboutMe" %}</p></a>
+    <a id="aboutMeBtn"><p>{% trans "AboutMe" %}</p></a>
+    <a id="projectsBtn"><p>{% trans "Projects" %}</p></a>
+    <a id="contactBtn"><p>{% trans "Contact" %}</p></a>
+</div>
+<div id="mainContent">
+    <div id="aboutMeTab">
+        about me sample text
+    </div>
+    <div id="projectsTab">
+        projects sample text
+    </div>
+    <div id="contactTab">
+        <div class="contactInfo" id="linkedInBtn">
+            <i class="fa-brands fa-linkedin"></i>
+            <p>Aitor Gómez Taboada</p>
+        </div>
+        <div class="contactInfo" id="mailToBtn">
+            <i class="fa-solid fa-envelope"></i>
+            <p>aitorgtaboada@gmail.com</p>
+        </div>
+    </div>
 </div>
 </body>
 </html>
